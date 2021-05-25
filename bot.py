@@ -16,7 +16,7 @@ app = nonebot.get_asgi()
 driver = nonebot.get_driver()
 driver.register_adapter("cqhttp", CQHTTPBot)
 
-nonebot.load_builtin_plugins()
+# nonebot.load_builtin_plugins()
 nonebot.load_from_toml("pyproject.toml")
 nonebot.load_plugins('src/plugins')  # 加载插件目录
 # nonebot.load_plugin("awesome_bot.plugins.xxx")  # 加载单个插件
@@ -28,5 +28,6 @@ nonebot.load_plugins('src/plugins')  # 加载插件目录
 
 
 if __name__ == "__main__":
-    nonebot.logger.warning("Always use `nb run` to start the bot instead of manually running!")
+    nonebot.logger.warning(
+        "Always use `nb run` to start the bot instead of manually running!")
     nonebot.run(app="__mp_main__:app")

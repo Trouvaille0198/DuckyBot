@@ -1,6 +1,7 @@
 # import nonebot
 from nonebot import get_driver
 from .config import Config
+from nonebot.log import logger
 
 from nonebot import on_command
 from nonebot.rule import to_me
