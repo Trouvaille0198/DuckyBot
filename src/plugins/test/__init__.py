@@ -8,7 +8,7 @@ from nonebot.typing import T_State
 from nonebot.adapters import Bot, Event
 
 
-matcher = on_command("test", rule=to_me(), priority=2)
+matcher = on_command("test", rule=to_me(), priority=5)
 
 
 @matcher.args_parser
