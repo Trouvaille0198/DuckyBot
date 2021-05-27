@@ -30,16 +30,18 @@ async def handle_first_receive(bot: Bot, event: Event, state: T_State):
 @weather.got("location", prompt="哪儿的天气呀？")
 async def handle_city(bot: Bot, event: Event, state: T_State):
     msg = str(event.get_message())
+
     if any(keyword in msg for keyword in ('了', '不')):
         await weather.finish('那告辞')
+
     area = is_location(msg, areas)
     if area:
         state['location'] = area
     else:
-        await weather.reject('这个地方我好像不认识...')
+        await weather.reject('{}是哪儿鸭, 我好像不认识...'.format(msg))
 
     await weather.send('正在查询{}天气...'.format(state['location']))
-    data = await get_now_weather(state['location'])
+    data = await get_now_weather(state['location'], key=global_config.weather_key)
     if data:
         await weather.send('{}天气{}，气温{}℃，{}{}级，相对湿度{}%'.format(
             state['location'], data['text'], data['temp'], data['windDir'], data['windScale'], data['humidity']))

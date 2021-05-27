@@ -13,11 +13,11 @@ def is_location(msg: str, areas: list) -> str:
     return None
 
 
-async def get_now_weather(area: str):
+async def get_now_weather(area: str, key: str):
     # 获取地区id
     location_url = 'https://geoapi.qweather.com/v2/city/lookup'
     location_params = {
-        'key': '0c5d383ed2db4b27a69f0de2b8135e6a',
+        'key': key,
         'location': area
     }
     data = json.loads(
@@ -25,7 +25,7 @@ async def get_now_weather(area: str):
     # 获取实时天气
     now_weather_url = 'https://devapi.qweather.com/v7/weather/now'
     now_weather_params = {
-        'key': '0c5d383ed2db4b27a69f0de2b8135e6a',
+        'key': key,
         'location': data['location'][0]['id']
     }
     data = json.loads(

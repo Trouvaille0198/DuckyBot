@@ -10,7 +10,6 @@
 - 完善结构
   - 数据分离
 - 新增功能
-  - 垃圾话生成
   - 日出日落 https://dev.qweather.com/docs/api/astronomy/sunrise-sunset/
   - 全国天气预警 https://dev.qweather.com/docs/api/warning/weather-warning/
   - 涩图！
