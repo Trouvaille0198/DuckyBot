@@ -5,6 +5,14 @@ with open(r'src/data/area.txt') as file_obj:
     areas = file_obj.read().split()
 
 
+def is_location(msg: str, areas: list) -> str:
+    for area in areas:
+        area = area[:-1] if (len(area) > 2) else area
+        if area in msg:
+            return area
+    return None
+
+
 async def get_now_weather(area: str):
     # 获取地区id
     location_url = 'https://geoapi.qweather.com/v2/city/lookup'
@@ -21,5 +29,8 @@ async def get_now_weather(area: str):
         'location': data['location'][0]['id']
     }
     data = json.loads(
-        await get_text(now_weather_url, params=now_weather_params))['now']
-    return data
+        await get_text(now_weather_url, params=now_weather_params))
+    if data['code'] != 200:
+        return data['now']
+    else:
+        return None
