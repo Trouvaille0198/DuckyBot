@@ -24,8 +24,10 @@ async def handle_first_receive(bot: Bot, event: Event, state: T_State):
     msg = str(event.get_message())
     if any(keyword in msg for keyword in ('明天', '明日')):
         state['forecast'] = '明日'
-    if any(keyword in msg for keyword in ('今天', '今日')):
+    elif any(keyword in msg for keyword in ('今天', '今日')):
         state['forecast'] = '今日'
+    else:
+        state['forecast'] = None
     area = is_location(msg, areas)
     if area:
         state['location'] = area
@@ -56,7 +58,7 @@ async def handle_city(bot: Bot, event: Event, state: T_State):
         else:
             await weather.finish('好像出了一点问题...再试一遍叭')
     else:
-        await weather.send('正在查询{}天气...'.format(state['location']))
+        await weather.send('正在查询{}实时天气...'.format(state['location']))
         data = await get_now_weather(state['location'], key=global_config.weather_key)
         if data:
             await weather.send('{}天气{}，气温{}℃，{}{}级，相对湿度{}%'.format(
