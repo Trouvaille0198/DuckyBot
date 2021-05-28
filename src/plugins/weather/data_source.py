@@ -36,7 +36,7 @@ async def get_now_weather(area: str, key: str):
         return None
 
 
-async def get_tomorrow_forcast(area: str, key: str):
+async def get_tomorrow_forcast(area: str, time: str, key: str):
     # 获取地区id
     location_url = 'https://geoapi.qweather.com/v2/city/lookup'
     location_params = {
@@ -54,6 +54,6 @@ async def get_tomorrow_forcast(area: str, key: str):
     data = json.loads(
         await get_text(tomorrow_weather_url, params=tomorrow_weather_params))
     if data['code'] != 200:
-        return data['daily'][1]
+        return data['daily'][0] if time == '今日' else data['daily'][1]
     else:
         return None

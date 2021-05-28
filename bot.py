@@ -5,11 +5,11 @@ import nonebot
 from nonebot.adapters.cqhttp import Bot as CQHTTPBot
 from nonebot.log import logger, default_format
 
-logger.add(r"logs/error.log",
-           rotation="00:00",
-           diagnose=False,
-           level="ERROR",
-           format=default_format)
+# logger.add(r"logs/error.log",
+#            rotation="00:00",
+#            diagnose=False,
+#            level="ERROR",
+#            format=default_format)
 
 
 nonebot.init()

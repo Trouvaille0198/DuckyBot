@@ -22,8 +22,10 @@ weather = on_keyword(('天气', '气温', '温度', '今天下雨'), permission=
 @weather.handle()
 async def handle_first_receive(bot: Bot, event: Event, state: T_State):
     msg = str(event.get_message())
-    if '明天' in msg:
-        state['forecast'] = true
+    if any(keyword in msg for keyword in ('明天', '明日')):
+        state['forecast'] = '明日'
+    if any(keyword in msg for keyword in ('今天', '今日')):
+        state['forecast'] = '今日'
     area = is_location(msg, areas)
     if area:
         state['location'] = area
@@ -32,7 +34,6 @@ async def handle_first_receive(bot: Bot, event: Event, state: T_State):
 @weather.got("location", prompt="哪儿的天气呀？")
 async def handle_city(bot: Bot, event: Event, state: T_State):
     msg = str(event.get_message())
-
     if any(keyword in msg for keyword in ('了', '不')):
         await weather.finish('那告辞')
 
@@ -43,12 +44,13 @@ async def handle_city(bot: Bot, event: Event, state: T_State):
         await weather.reject('{}是哪儿鸭, 我好像不认识...'.format(msg))
 
     if state['forecast']:
-        await weather.send('正在查询{}明日天气...'.format(state['location']))
-        data = await get_tomorrow_forcast(state['location'], key=global_config.weather_key)
+        await weather.send('正在查询{}{}天气...'.format(state['location'], state['forecast']))
+        data = await get_tomorrow_forcast(state['location'], state['forecast'], key=global_config.weather_key)
         if data:
             await weather.send(
-                '{}明日天气预报:\n 气温{}℃-{}℃\n白天{}，夜间{}\n相对湿度{}%\n云量{}%'
-                .format(state['location'], data['tempMax'], data['tempMin'],
+                '{}{}天气预报:\n气温 {}℃-{}℃\n白天{}，夜间{}\n相对湿度{}%\n云量{}%'
+                .format(state['location'], state['forecast'],
+                        data['tempMax'], data['tempMin'],
                         data['textDay'], data['textNight'],
                         data['humidity'], data['cloud']))
         else:
