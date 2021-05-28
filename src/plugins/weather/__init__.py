@@ -9,7 +9,7 @@ from nonebot.typing import T_State
 from nonebot.adapters.cqhttp import Bot, Event, GroupMessageEvent
 from nonebot.adapters.cqhttp.permission import PRIVATE, GROUP
 
-from .data_source import get_now_weather, areas, is_location
+from .data_source import get_now_weather, areas, is_location, get_tomorrow_forcast
 import re
 
 global_config = get_driver().config
@@ -22,6 +22,8 @@ weather = on_keyword(('天气', '气温', '温度', '今天下雨'), permission=
 @weather.handle()
 async def handle_first_receive(bot: Bot, event: Event, state: T_State):
     msg = str(event.get_message())
+    if '明天' in msg:
+        state['forecast'] = true
     area = is_location(msg, areas)
     if area:
         state['location'] = area
@@ -40,10 +42,23 @@ async def handle_city(bot: Bot, event: Event, state: T_State):
     else:
         await weather.reject('{}是哪儿鸭, 我好像不认识...'.format(msg))
 
-    await weather.send('正在查询{}天气...'.format(state['location']))
-    data = await get_now_weather(state['location'], key=global_config.weather_key)
-    if data:
-        await weather.send('{}天气{}，气温{}℃，{}{}级，相对湿度{}%'.format(
-            state['location'], data['text'], data['temp'], data['windDir'], data['windScale'], data['humidity']))
+    if state['forecast']:
+        await weather.send('正在查询{}明日天气...'.format(state['location']))
+        data = await get_tomorrow_forcast(state['location'], key=global_config.weather_key)
+        if data:
+            await weather.send(
+                '{}明日天气预报:\n 气温{}℃-{}℃\n白天{}，夜间{}\n相对湿度{}%\n云量{}%'
+                .format(state['location'], data['tempMax'], data['tempMin'],
+                        data['textDay'], data['textNight'],
+                        data['humidity'], data['cloud']))
+        else:
+            await weather.finish('好像出了一点问题...再试一遍叭')
     else:
-        await weather.finish('好像出了一点问题...再试一遍叭')
+        await weather.send('正在查询{}天气...'.format(state['location']))
+        data = await get_now_weather(state['location'], key=global_config.weather_key)
+        if data:
+            await weather.send('{}天气{}，气温{}℃，{}{}级，相对湿度{}%'.format(
+                state['location'], data['text'], data['temp'],
+                data['windDir'], data['windScale'], data['humidity']))
+        else:
+            await weather.finish('好像出了一点问题...再试一遍叭')

@@ -34,3 +34,26 @@ async def get_now_weather(area: str, key: str):
         return data['now']
     else:
         return None
+
+
+async def get_tomorrow_forcast(area: str, key: str):
+    # 获取地区id
+    location_url = 'https://geoapi.qweather.com/v2/city/lookup'
+    location_params = {
+        'key': key,
+        'location': area
+    }
+    data = json.loads(
+        await get_text(location_url, params=location_params))
+    # 获取明日预报
+    tomorrow_weather_url = 'https://devapi.qweather.com/v7/weather/3d'
+    tomorrow_weather_params = {
+        'key': key,
+        'location': data['location'][0]['id']
+    }
+    data = json.loads(
+        await get_text(tomorrow_weather_url, params=tomorrow_weather_params))
+    if data['code'] != 200:
+        return data['daily'][1]
+    else:
+        return None
