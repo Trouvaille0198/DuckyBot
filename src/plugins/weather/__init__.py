@@ -16,7 +16,7 @@ global_config = get_driver().config
 config = Config(**global_config.dict())
 
 
-weather = on_keyword(('天气', '气温', '温度', '今天下雨'), permission=PRIVATE)
+weather = on_keyword(('天气', '气温', '温度'), permission=PRIVATE)
 
 
 @weather.handle()

@@ -8,24 +8,15 @@ from nonebot.typing import T_State
 from nonebot.adapters.cqhttp import Bot, Event, GroupMessageEvent
 from nonebot.adapters.cqhttp.permission import PRIVATE, GROUP
 
-from .data_source import get_dirty_words
-
+from .data_source import get_rainbow_pi
 
 global_config = get_driver().config
 config = Config(**global_config.dict())
 
-dirty_word = on_keyword(('垃圾话', '对线', '嘴臭'), permission=PRIVATE | GROUP)
+rainbow_pi = on_regex("夸(一?)[夸下波]|放(一?)[个放]彩虹屁", permission=PRIVATE | GROUP)
 
 
-@dirty_word.handle()
+@rainbow_pi.handle()
 async def handle_first_receive(bot: Bot, event: Event, state: T_State):
-    await dirty_word.send('来嗷')
-
-
-@dirty_word.receive()
-async def send_dirty_words(bot: Bot, event: GroupMessageEvent, state: T_State):
-    msg = str(event.get_message())
-    if msg != '结束':
-        await dirty_word.reject(get_dirty_words())
-    else:
-        await dirty_word.finish('骂不过我, 溜了溜了')
+    rainbow_sentence = await get_rainbow_pi()
+    await rainbow_pi.send(rainbow_sentence)
