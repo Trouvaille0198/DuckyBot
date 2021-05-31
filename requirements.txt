@@ -1,0 +1,5 @@
+loguru==0.5.3
+pydantic==1.8.1
+jieba==0.42.1
+aiohttp==3.7.4.post0
+nonebot==1.8.3

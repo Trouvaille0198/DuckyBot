@@ -14,7 +14,7 @@ from random import choice
 global_config = get_driver().config
 config = Config(**global_config.dict())
 
-erciyuan = on_regex("纸片人|二次元", permission=PRIVATE | GROUP)
+erciyuan = on_regex("纸片人|二次元|二刺螈", permission=PRIVATE | GROUP)
 
 
 @erciyuan.handle()

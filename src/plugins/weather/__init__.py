@@ -52,7 +52,7 @@ async def handle_city(bot: Bot, event: Event, state: T_State):
             await weather.send(
                 '{}{}天气预报:\n气温 {}℃-{}℃\n白天{}，夜间{}\n相对湿度{}%\n云量{}%'
                 .format(state['location'], state['forecast'],
-                        data['tempMax'], data['tempMin'],
+                        data['tempMin'], data['tempMax'],
                         data['textDay'], data['textNight'],
                         data['humidity'], data['cloud']))
         else:

@@ -14,7 +14,7 @@ from random import choice
 global_config = get_driver().config
 config = Config(**global_config.dict())
 
-what = on_regex("(.*?)是[嘛|啥]意思", permission=PRIVATE | GROUP)
+what = on_regex("(.*?)是[什么|嘛|啥][意思|梗]", permission=PRIVATE | GROUP)
 
 
 @what.handle()

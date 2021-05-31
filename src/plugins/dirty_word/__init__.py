@@ -23,7 +23,7 @@ async def handle_first_receive(bot: Bot, event: Event, state: T_State):
 
 
 @dirty_word.receive()
-async def send_dirty_words(bot: Bot, event: GroupMessageEvent, state: T_State):
+async def send_dirty_words(bot: Bot, event: Event, state: T_State):
     msg = str(event.get_message())
     if msg != '结束':
         await dirty_word.reject(get_dirty_words())
