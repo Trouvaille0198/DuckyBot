@@ -30,6 +30,7 @@ async def get_now_weather(area: str, key: str):
     }
     data = json.loads(
         await get_text(now_weather_url, params=now_weather_params))
+    print(data)
     if data['code'] != 200:
         return data['now']
     else:
@@ -53,6 +54,7 @@ async def get_tomorrow_forcast(area: str, time: str, key: str):
     }
     data = json.loads(
         await get_text(tomorrow_weather_url, params=tomorrow_weather_params))
+    print(data)
     if data['code'] != 200:
         return data['daily'][0] if time == '今日' else data['daily'][1]
     else:
