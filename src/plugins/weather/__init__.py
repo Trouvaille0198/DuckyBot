@@ -49,6 +49,7 @@ async def handle_city(bot: Bot, event: Event, state: T_State):
         await weather.send('正在查询{}{}天气...'.format(state['location'], state['forecast']))
         data = await get_tomorrow_forcast(state['location'], state['forecast'], key=global_config.weather_key)
         if data:
+            print(data)
             await weather.send(
                 '{}{}天气预报:\n气温 {}℃-{}℃\n白天{}，夜间{}\n相对湿度{}%\n云量{}%'
                 .format(state['location'], state['forecast'],
