@@ -14,7 +14,7 @@ from random import choice
 global_config = get_driver().config
 config = Config(**global_config.dict())
 
-setu = on_regex("来(一?)[张份个波][色涩射蛇🐍][图的🤮]", permission=PRIVATE | GROUP)
+setu = on_regex("来(一?)[张份个波点][色涩射蛇🐍][图的🤮]", permission=PRIVATE | GROUP)
 
 
 @setu.handle()
@@ -25,5 +25,6 @@ async def handle_first_receive(bot: Bot, event: Event, state: T_State):
     if setu_url == '达到次数限制':
         await setu.finish(choice(('冲太多了，下次再来吧', '色图容量不足!')))
     else:
+        await setu.send("喏："+setu_url)
         img = MessageSegment.image(setu_url, proxy=False)
         await setu.send(Message(img))

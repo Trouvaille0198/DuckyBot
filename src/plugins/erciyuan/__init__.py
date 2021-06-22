@@ -23,5 +23,6 @@ async def handle_first_receive(bot: Bot, event: Event, state: T_State):
         ('二刺螈是吧😅', '这就来', '笑死，狗都不发',
          '不是很懂你们二次元', '差点给你们整下雨了😅', '扎不多得嘞🥵')))
     erciyuan_url = await get_erciyuan()
+    await erciyuan.send("喏："+erciyuan_url)
     img = MessageSegment.image(erciyuan_url, proxy=False)
     await erciyuan.send(Message(img))
