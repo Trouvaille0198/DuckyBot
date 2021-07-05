@@ -12,7 +12,6 @@
 - 新增功能
   - 日出日落 https://dev.qweather.com/docs/api/astronomy/sunrise-sunset/
   - 全国天气预警 https://dev.qweather.com/docs/api/warning/weather-warning/
-  - 涩图！
   - 学校相关功能
     - 空教室查询
     - 课程信息查询
