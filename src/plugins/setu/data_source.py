@@ -4,7 +4,8 @@ from random import choice
 
 
 async def get_setu(key: str):
-    setu_url = 'https://api.lolicon.app/setu/?&r18=2&size1200=true'
+    old_setu_url = 'https://api.lolicon.app/setu/?&r18=2&size1200=true'
+    setu_url = 'https://api.lolicon.app/setu/v2/?&r18=2&size=regular'
     print(key)
     params = {
         "apikey": key
@@ -12,8 +13,9 @@ async def get_setu(key: str):
     data = json.loads(
         await get_text(setu_url, params=params))
     print(data)
-    if data['code'] == 0:
-        return data['data'][0]['url'].replace('png', 'jpg')
+    if not data['error']:
+        pic_url = data['data'][0]['urls']['regular']
+        return pic_url
     else:
         return '达到次数限制'
 
