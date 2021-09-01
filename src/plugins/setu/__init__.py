@@ -19,7 +19,7 @@ setu = on_regex("来(一?)[张份个波点][色涩射蛇🐍][图的🤮]", perm
 
 @setu.handle()
 async def handle_first_receive(bot: Bot, event: Event, state: T_State):
-    await setu.send(choice(('来咯', '别急，来了', '这就冲', '叫爸爸')))
+    await setu.send(choice(('来咯', '别急，来了', '这就冲', '叫爸爸', '逼玩意儿天天要涩图，宁冲得起吗')))
     setu_url = await get_setu(key=choice(global_config.setu_key))
     print(global_config.setu_key)
     if setu_url == '达到次数限制':

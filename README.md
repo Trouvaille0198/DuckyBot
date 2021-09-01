@@ -5,6 +5,9 @@
 1. generate project using `nb create` .
 2. writing your plugins under `src/plugins` folder.
 3. run your bot using `nb run` .
+## 备忘
+添加插件：`nb plugin new`
+
 
 ## TODO
 - 完善结构

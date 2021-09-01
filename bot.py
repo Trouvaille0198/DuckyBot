@@ -15,6 +15,13 @@ from nonebot.log import logger, default_format
 nonebot.init()
 app = nonebot.get_asgi()
 
+
+# 定时器配置
+nonebot.init(apscheduler_autostart=True)
+nonebot.init(apscheduler_config={
+    "apscheduler.timezone": "Asia/Shanghai"
+})
+
 driver = nonebot.get_driver()
 driver.register_adapter("cqhttp", CQHTTPBot)
 
